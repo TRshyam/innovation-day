@@ -44,8 +44,8 @@ draw = mp.solutions.drawing_utils
 
 
 # drawing tools
-tools = cv2.imread("tools.png")
-# tools = cv2.imread("vritual mouse/tools.png")
+# tools = cv2.imread("tools.png")
+tools = cv2.imread("vritual mouse/tools.png")
 
 if tools is None:
     print("Error: Unable to load the tools image.")
