@@ -51,27 +51,7 @@ class HandRecog:
     """
     
     def __init__(self, hand_label):
-        """
-        Constructs all the necessary attributes for the HandRecog object.
-
-        Parameters
-        ----------
-            finger : int
-                Represent gesture corresponding to Enum 'Gest',
-                stores computed gesture for current frame.
-            ori_gesture : int
-                Represent gesture corresponding to Enum 'Gest',
-                stores gesture being used.
-            prev_gesture : int
-                Represent gesture corresponding to Enum 'Gest',
-                stores gesture computed for previous frame.
-            frame_count : int
-                total no. of frames since 'ori_gesture' is updated.
-            hand_result : Object
-                Landmarks obtained from mediapipe.
-            hand_label : int
-                Represents multi-handedness corresponding to Enum 'HLabel'.
-        """
+       
 
         self.finger = 0
         self.ori_gesture = Gest.PALM
@@ -84,18 +64,7 @@ class HandRecog:
         self.hand_result = hand_result
 
     def get_signed_dist(self, point):
-        """
-        returns signed euclidean distance between 'point'.
-
-        Parameters
-        ----------
-        point : list contaning two elements of type list/tuple which represents 
-            landmark point.
-        
-        Returns
-        -------
-        float
-        """
+       
         sign = -1
         if self.hand_result.landmark[point[0]].y < self.hand_result.landmark[point[1]].y:
             sign = 1
@@ -105,49 +74,22 @@ class HandRecog:
         return dist*sign
     
     def get_dist(self, point):
-        """
-        returns euclidean distance between 'point'.
-
-        Parameters
-        ----------
-        point : list contaning two elements of type list/tuple which represents 
-            landmark point.
         
-        Returns
-        -------
-        float
-        """
+        
         dist = (self.hand_result.landmark[point[0]].x - self.hand_result.landmark[point[1]].x)**2
         dist += (self.hand_result.landmark[point[0]].y - self.hand_result.landmark[point[1]].y)**2
         dist = math.sqrt(dist)
         return dist
     
     def get_dz(self,point):
-        """
-        returns absolute difference on z-axis between 'point'.
-
-        Parameters
-        ----------
-        point : list contaning two elements of type list/tuple which represents 
-            landmark point.
-        
-        Returns
-        -------
-        float
-        """
+       
         return abs(self.hand_result.landmark[point[0]].z - self.hand_result.landmark[point[1]].z)
     
     # Function to find Gesture Encoding using current finger_state.
     # Finger_state: 1 if finger is open, else 0
     def set_finger_state(self):
-        """
-        set 'finger' by computing ratio of distance between finger tip 
-        , middle knuckle, base knuckle.
-
-        Returns
-        -------
-        None
-        """
+        
+        
         if self.hand_result == None:
             return
 
@@ -219,48 +161,7 @@ class HandRecog:
 
 # Executes commands according to detected gestures
 class Controller:
-    """
-    Executes commands according to detected gestures.
-
-    Attributes
-    ----------
-    tx_old : int
-        previous mouse location x coordinate
-    ty_old : int
-        previous mouse location y coordinate
-    flag : bool
-        true if V gesture is detected
-    grabflag : bool
-        true if FIST gesture is detected
-    pinchmajorflag : bool
-        true if PINCH gesture is detected through MAJOR hand,
-        on x-axis 'Controller.changesystembrightness', 
-        on y-axis 'Controller.changesystemvolume'.
-    pinchminorflag : bool
-        true if PINCH gesture is detected through MINOR hand,
-        on x-axis 'Controller.scrollHorizontal', 
-        on y-axis 'Controller.scrollVertical'.
-    pinchstartxcoord : int
-        x coordinate of hand landmark when pinch gesture is started.
-    pinchstartycoord : int
-        y coordinate of hand landmark when pinch gesture is started.
-    pinchdirectionflag : bool
-        true if pinch gesture movment is along x-axis,
-        otherwise false
-    prevpinchlv : int
-        stores quantized magnitued of prev pinch gesture displacment, from 
-        starting position
-    pinchlv : int
-        stores quantized magnitued of pinch gesture displacment, from 
-        starting position
-    framecount : int
-        stores no. of frames since 'pinchlv' is updated.
-    prev_hand : tuple
-        stores (x, y) coordinates of hand in previous frame.
-    pinch_threshold : float
-        step size for quantization of 'pinchlv'.
-    """
-
+   
     tx_old = 0
     ty_old = 0
     trial = True
